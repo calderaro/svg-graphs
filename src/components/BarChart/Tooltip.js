@@ -4,20 +4,25 @@ import { nullLiteral } from "@babel/types";
 class Tooltip extends React.Component {
   render() {
     const { ticksY, scaleX, scaleY, height, width, values } = this.props;
-    const barXPos = scaleX(1) + scaleX.bandwidth() / 2;
-    const barYPos = height - scaleY.range()[0];
+    const barXPos = scaleX(4) + scaleX.bandwidth() / 2;
+    const barYPos = height - scaleY(values[4]);
     const halfContainerWidth = width / 2;
-    console.log(barYPos, height);
+    console.log(
+      barYPos,
+      height,
+      barXPos > halfContainerWidth,
+      width - barXPos <= 100
+    );
 
-    const isLeft = barXPos > halfContainerWidth;
+    const isLeft = width - barXPos <= 100;
     const pathR = "0,0 100,0 100,42 14,42 0,60";
     const pathL = "0,0 100,0 100,60 86,42 0,42";
     const path = isLeft ? pathL : pathR;
 
-    const xPos = barXPos;
-    const yPos = barYPos;
+    const xPos = isLeft ? barXPos - 100 : barXPos;
+    const yPos = barYPos - 60 > height ? 60 : barYPos - 60;
     return (
-      <g transform={`translate(${xPos},${barYPos})`}>
+      <g transform={`translate(${xPos},${yPos})`}>
         <polygon points={path} fill="#FFF" stroke="rgba(0,0,0,.1)" />
         <text
           x={50 / 2}
