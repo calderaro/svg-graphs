@@ -2,6 +2,7 @@ import React from "react";
 import { scaleLinear, scaleBand } from "d3-scale";
 import { max } from "d3-array";
 import Grid from "./Grid";
+import Tooltip from "./Tooltip";
 
 class BarChar extends React.Component {
   render() {
@@ -104,6 +105,14 @@ class BarChar extends React.Component {
               </text>
             );
           })}
+          <Tooltip
+            ticksY={ticksY}
+            scaleX={scaleX}
+            scaleY={scaleY}
+            height={height}
+            width={width}
+            values={values}
+          />
         </svg>
       </div>
     );
@@ -112,7 +121,7 @@ class BarChar extends React.Component {
 
 BarChar.defaultProps = {
   data: {
-    values: [10, 20, 28, 400, 566, 30, 1000],
+    values: [10, 20, 28, 400, 566, 30, 250],
     labels: ["20", "20", "28", "400", "566", "30", "500"],
     colors: [
       "#FF6384",
