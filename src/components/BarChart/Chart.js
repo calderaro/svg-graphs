@@ -10,7 +10,7 @@ class BarChar extends React.Component {
   };
   render() {
     const { data } = this.props;
-    const { values, labels, colors } = data;
+    const { values, labels, colors, yMax } = data;
     const height = 600;
     const width = 800;
     const columPaddingInner = 0.1;
@@ -24,15 +24,14 @@ class BarChar extends React.Component {
     const yScaleMinValue = columsBottomOffset;
     const xScaleMaxValue = width - columsRightOffset;
     const xScaleMinValue = columsLeftOffset;
-    const maxValue = max(values);
+    const maxValue = yMax || max(values);
     const minValue = 0;
     const gridColor = "rgba(0, 0, 0, .1)";
     const labelsColor = "rgba(0, 0, 0, .3)";
 
     const scaleY = scaleLinear()
       .domain([minValue, maxValue])
-      .range([yScaleMinValue, yScaleMaxValue])
-      .nice(5);
+      .range([yScaleMinValue, yScaleMaxValue]);
 
     const scaleX = scaleBand()
       .domain(values.map((x, index) => index))
@@ -40,7 +39,7 @@ class BarChar extends React.Component {
       .paddingInner(columPaddingInner)
       .paddingOuter(columPaddingOuter);
 
-    const ticksY = scaleY.ticks(5);
+    const ticksY = scaleY.nice().ticks(6);
 
     return (
       <div className="App">
@@ -125,8 +124,9 @@ class BarChar extends React.Component {
 
 BarChar.defaultProps = {
   data: {
-    values: [10, 20, 28, 400, 566, 30, 250],
-    labels: ["20", "20", "28", "400", "566", "30", "500"],
+    values: [1600, 870, 100, 100, 300, 500, 700],
+    yMax: null,
+    labels: ["a", "b", "c", "d", "e", "f", "g"],
     colors: [
       "#FF6384",
       "#36A2EB",

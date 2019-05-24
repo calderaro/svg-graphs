@@ -29,7 +29,7 @@ class Tooltip extends React.Component {
           stroke={"green"}
           strokeWidth={1}
         >
-          {`${1999} ton`}
+          {`${value} ton`}
         </text>
         <text
           x={50 / 2}
@@ -40,7 +40,7 @@ class Tooltip extends React.Component {
           stroke={"red"}
           strokeWidth={1}
         >
-          {`${19999} lbs`}
+          {`${value} lbs`}
         </text>
       </g>
     );
