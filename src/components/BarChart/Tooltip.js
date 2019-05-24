@@ -1,18 +1,14 @@
 import React from "react";
-import { nullLiteral } from "@babel/types";
 
 class Tooltip extends React.Component {
   render() {
-    const { ticksY, scaleX, scaleY, height, width, values } = this.props;
-    const barXPos = scaleX(4) + scaleX.bandwidth() / 2;
-    const barYPos = height - scaleY(values[4]);
-    const halfContainerWidth = width / 2;
-    console.log(
-      barYPos,
-      height,
-      barXPos > halfContainerWidth,
-      width - barXPos <= 100
-    );
+    const { scaleX, scaleY, height, width, tooltip } = this.props;
+
+    if (!tooltip) return null;
+
+    const { index, value } = tooltip;
+    const barXPos = scaleX(index) + scaleX.bandwidth() / 2;
+    const barYPos = height - scaleY(value);
 
     const isLeft = width - barXPos <= 100;
     const pathR = "0,0 100,0 100,42 14,42 0,60";

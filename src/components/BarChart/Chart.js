@@ -5,6 +5,9 @@ import Grid from "./Grid";
 import Tooltip from "./Tooltip";
 
 class BarChar extends React.Component {
+  state = {
+    tooltip: null
+  };
   render() {
     const { data } = this.props;
     const { values, labels, colors } = data;
@@ -84,6 +87,7 @@ class BarChar extends React.Component {
                 width={bandwidth}
                 height={scaleY(value) - rangeMin}
                 fill={colors[index]}
+                onClick={() => this.setState({ tooltip: { index, value } })}
               />
             );
           })}
@@ -111,7 +115,7 @@ class BarChar extends React.Component {
             scaleY={scaleY}
             height={height}
             width={width}
-            values={values}
+            tooltip={this.state.tooltip}
           />
         </svg>
       </div>
